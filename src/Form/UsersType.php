@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class UsersType extends AbstractType
@@ -82,7 +82,7 @@ class UsersType extends AbstractType
                     "required" => true
                 ]
             ])
-            ->add("submit", SubmitType:class, [
+            ->add("submit", SubmitType::class, [
                 "label" => "Guardar",
                 "attr" => [
                     "class" => "btn btn-primary"

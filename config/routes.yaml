@@ -1,8 +1,4 @@
-# controllers:
-#     resource:
-#         path: ../src/Controller/
-#         namespace: App\Controller
-#     type: attribute
+
 index:
     path: /users
-    controller: App\Controller\UserController::index
+    controller: App\Controller\UserController::getUsers
