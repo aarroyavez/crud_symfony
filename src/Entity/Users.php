@@ -66,9 +66,9 @@ class Users
     private $email;
 
     /**
-     * @var \DateTime|null
+     * @var \bool|null
      *
-     * @ORM\Column(name="authn_data", type="date", nullable=true)
+     * @ORM\Column(name="authn_data", type="boolean", nullable=true)
      */
     private $authnData;
 
@@ -149,12 +149,12 @@ class Users
         return $this;
     }
 
-    public function getAuthnData(): ?\DateTimeInterface
+    public function getAuthnData(): ?bool
     {
         return $this->authnData;
     }
 
-    public function setAuthnData(?\DateTimeInterface $authnData): static
+    public function setAuthnData(?bool $authnData): self
     {
         $this->authnData = $authnData;
 

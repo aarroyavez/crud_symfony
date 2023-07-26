@@ -73,7 +73,7 @@ class UsersType extends AbstractType
                     "required" => true
                 ]
             ])
-            ->add('authData', CheckboxType::class, [
+            ->add('authn_data', CheckboxType::class, [
                 "label" => "Datos de autorización",
                 "attr" => [
                     "placeholder" => "Datos de autorización",
