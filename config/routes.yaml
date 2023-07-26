@@ -5,3 +5,7 @@ getUsers:
 createUser:
     path: /user/create
     controller: App\Controller\UserController::createUser
+
+deleteUser:
+    path: /user/create/{id}
+    controller: App\Controller\UserController::deleteUser

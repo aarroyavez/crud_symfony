@@ -79,7 +79,7 @@ class UsersType extends AbstractType
                     "placeholder" => "Datos de autorización",
                     "autocomplete" => "off",
                     "class" => "form-control",
-                    "required" => true
+                    "required" => false
                 ]
             ])
             ->add("submit", SubmitType::class, [

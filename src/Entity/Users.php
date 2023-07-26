@@ -68,9 +68,9 @@ class Users
     /**
      * @var \bool|null
      *
-     * @ORM\Column(name="authn_data", type="boolean", nullable=true)
+     * @ORM\Column(name="authn_data", type="boolean", nullable=false)
      */
-    private $authnData;
+    private $authnData=false;
 
     public function getId(): ?int
     {

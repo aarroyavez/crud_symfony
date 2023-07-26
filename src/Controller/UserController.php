@@ -8,6 +8,8 @@ use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 
 class UserController extends AbstractController
 {
@@ -53,5 +55,28 @@ class UserController extends AbstractController
         return $this->render("user/user_create.html.twig", [
             "form_users" => $form_users->createView(),
         ]);
+    }
+
+    public function deleteUser($id, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $userRepository = $this->entityManager->getRepository(Users::class);
+        $user = $userRepository->find($id);
+
+        if (!$user) {
+            // Manejar el caso en el que el usuario no existe
+            // Puedes lanzar una excepción, redirigir a una página de error, etc.
+            // Por ejemplo:
+            // throw $this->createNotFoundException('El usuario no existe');
+        }
+
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+
+        // Redirigir a la ruta "getUsers" después de eliminar
+        return $this->reDirectToRoute('getUsers');
+    }
+
+    public function uptateUser($id){
+        
     }
 }
