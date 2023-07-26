@@ -6,10 +6,10 @@
 
 {% block body %}
     <h1>Users list</h1>
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>#</th>
+                <th scope="col">#</th>
                 <th>Nombre</th>
                 <th>Usuario</th>
                 <th>Dirección</th>
@@ -21,13 +21,13 @@
         <tbody>
             {% for user in listUsers %}
                 <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.address }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.phone }}</td>
-                    <td>{{ user.authnData }}</td>
+                    <td scope="col">{{ loop.index }}</td>
+                    <td scope="col">{{ user.name }}</td>
+                    <td scope="col">{{ user.username }}</td>
+                    <td scope="col">{{ user.address }}</td>
+                    <td scope="col">{{ user.email }}</td>
+                    <td scope="col">{{ user.phone }}</td>
+                    <td scope="col">{{ user.authnData }}</td>
                     <td>
                         <a href="#" class="btn btn-primary">Editar</a>
                         <a href="#" class="btn btn-danger">Eliminar</a>

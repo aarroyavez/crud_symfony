@@ -1,0 +1,23 @@
+{% extends ('base.html.twig') %}
+
+{# {% block title %}
+    <title>Registro de usuarios</title>
+{% endblock title %} #}
+
+{% block body %}
+    <h1>Registro</h1>
+    {{ form_start(form_users) }}
+        <div class="form-group col-lg-4">
+            {{ form_row(form_users.name) }}
+        </div>
+        {{ form_row(form_users.username) }}
+        {{ form_row(form_users.password) }}
+        {{ form_row(form_users.address) }}
+        {{ form_row(form_users.phone) }}
+        {{ form_row(form_users.email) }}
+        {{ form_row(form_users.authn_data) }}
+        {{ form_widget(form_users.submit) }}
+
+    {{ form_end(form_users) }}
+    
+{% endblock %}
