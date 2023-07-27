@@ -10,7 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Product;
 use App\Form\ProductType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\ProductSearchFormType;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProductController extends AbstractController
 {
@@ -24,7 +28,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/products", name="get_available_products", methods={"GET"})
+     * @Route("/products", name="getAvaliableProducts", methods={"GET"})
      */
     public function getAvailableProducts(Request $request): JsonResponse
     {
@@ -51,8 +55,8 @@ class ProductController extends AbstractController
 
             return new JsonResponse($responseData, 200);
         } catch (\Exception $e) {
-            // En caso de excepción, enviar respuesta de error 400 con el mensaje de error
-            return new JsonResponse(['error' => 'Respuesta 400, error en la consulta: ' . $e->getMessage()], 400);
+            // En caso de excepción, lanzar una excepción BadRequestHttpException
+            throw new BadRequestHttpException('Respuesta 400, error en la consulta: ' . $e->getMessage());
         }
     }
 
@@ -75,6 +79,29 @@ class ProductController extends AbstractController
 
         return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/products/search", name="search_products", methods={"GET", "POST"})
+     */
+    public function searchProducts(Request $request): Response
+    {
+        $form = $this->createForm(ProductSearchFormType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchTerm = $form->get('searchTerm')->getData();
+            $products = $this->productRepository->findProductsBySearchTerm($searchTerm);
+        } else {
+            // Si el formulario no ha sido enviado o no es válido, mostramos todos los productos
+            $products = $this->productRepository->findAll();
+        }
+
+        return $this->render('product/index.html.twig', [
+            'form' => $form->createView(),
+            'products' => $products,
         ]);
     }
 }

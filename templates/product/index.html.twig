@@ -8,8 +8,10 @@
         <div class="col-lg-10 mx-auto mt-4">
             <h1 class="text-center">Lista de Productos</h1>
 
-            <!-- Incluir el formulario de búsqueda -->
-            {% include 'product/search.index.twig' %}
+            <!-- Formulario de búsqueda -->
+            <form action="{{ path('search_products') }}" method="post">
+                {{ form_widget(form) }}
+            </form>
 
             <div class="table-responsive">
                 <table class="table">
@@ -23,12 +25,12 @@
                     </thead>
                     <tbody>
                         {% for product in products %}
-                        <tr scope="col" class="text-center">
-                            <td>{{ product.id }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.available_quantity }}</td>
-                            <td>{{ product.unit_price }}</td>
-                        </tr>
+                            <tr scope="col" class="text-center">
+                                <td>{{ product.id }}</td>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.available_quantity }}</td>
+                                <td>{{ product.unit_price }}</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
