@@ -44,12 +44,16 @@ class UserController extends AbstractController
         $form_users->handleRequest($request);
 
         if ($form_users->isSubmitted() && $form_users->isValid()) {
-            $this->entityManager->persist($users);
-            $this->entityManager->flush();
+            try {
+                $this->entityManager->persist($users);
+                $this->entityManager->flush();
 
-            // Redirigir a la página de éxito o hacer otra acción después de guardar el usuario
-            // Por ejemplo:
-            // return $this->redirectToRoute('user_list');
+                // Agregar mensaje de éxito en el registro
+                $this->addFlash('success', 'Respuesta 204, se registró correctamente');
+            } catch (\Exception $e) {
+                // Agregar mensaje de error en caso de excepción
+                $this->addFlash('error', 'Respuesta 400, error al registrar el usuario: ' . $e->getMessage());
+            }
         }
 
         return $this->render("user/user_create.html.twig", [

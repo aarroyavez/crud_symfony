@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
@@ -55,14 +56,15 @@ class UsersType extends AbstractType
                     "required" => true
                 ]
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', NumberType::class, [
                 "label" => "Teléfono",
                 "attr" => [
                     "placeholder" => "Teléfono",
                     "autocomplete" => "off",
                     "class" => "form-control",
                     "required" => true
-                ]
+                ],
+                // "invalid_message" => "El número de teléfono debe contener solo dígitos.",
             ])
             ->add('email', EmailType::class, [
                 "label" => "Correo electrónico",

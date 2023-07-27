@@ -1,10 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 mx-auto">
-                <h1 class="text-center">Registro</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 mx-auto">
+            <h1 class="text-center">Registro</h1>
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-danger">
+                    {{ flashMessage|join }}
+                </div>
+            {% endfor %}
                 {{ form_start(form_users) }}
                 <div class="form-group">
                     {{ form_row(form_users.name) }}
@@ -12,6 +22,11 @@
                     {{ form_row(form_users.password) }}
                     {{ form_row(form_users.address) }}
                     {{ form_row(form_users.phone) }}
+                    {% if form_errors(form_users.phone) %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form_users.phone)|join }}
+                        </div>
+                    {% endif %}
                     {{ form_row(form_users.email) }}
                     <div class="form-check">
                         {{ form_widget(form_users.authn_data, {'attr': {'class': 'form-check-input'}}) }}

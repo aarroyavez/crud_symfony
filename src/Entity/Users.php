@@ -70,7 +70,7 @@ class Users
      *
      * @ORM\Column(name="authn_data", type="boolean", nullable=false)
      */
-    private $authnData=false;
+    private $authnData = false;
 
     public function getId(): ?int
     {
@@ -160,6 +160,4 @@ class Users
 
         return $this;
     }
-
-
 }
