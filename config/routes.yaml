@@ -9,3 +9,7 @@ createUser:
 deleteUser:
     path: /user/create/{id}
     controller: App\Controller\UserController::deleteUser
+
+getAvailableProducts:
+    path: /products
+    controller: App\Controller\ProductController::getAvailableProducts

@@ -9,12 +9,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Product;
+use App\Repository\ProductRepository;
 
 class UserController extends AbstractController
 {
     private $entityManager;
-
+    private $productRepository;
+    
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -83,4 +86,27 @@ class UserController extends AbstractController
     public function uptateUser($id){
         
     }
+
+    /**
+     * @Route("/products", name="products_list")
+     */
+    public function getProducts(Request $request): JsonResponse
+    {
+        // Obtener los parámetros del límite y el fragmento de nombre de la petición
+        $limit = $request->query->get('limit', 10);
+        $searchText = $request->query->get('searchText', '');
+
+        // Obtener la lista de productos que cumplan con los parámetros
+        $products = $this->productRepository->findProductsBySearchText($searchText, $limit);
+
+        // Preparar la respuesta en formato JSON
+        $response = [
+            'status' => 200,
+            'message' => 'OK',
+            'data' => $products,
+        ];
+
+        return new JsonResponse($response);
+    }
 }
+
