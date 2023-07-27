@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -7,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Product;
+use App\Form\ProductType;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends AbstractController
 {
@@ -48,5 +52,28 @@ class ProductController extends AbstractController
             // En caso de excepción, enviar respuesta de error 400 con el mensaje de error
             return new JsonResponse(['error' => 'Respuesta 400, error en la consulta: ' . $e->getMessage()], 400);
         }
+    }
+
+    /**
+     * @Route("/products/new", name="new_product", methods={"GET", "POST"})
+     */
+    public function newProduct(Request $request): Response
+    {
+        $product = new Product();
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('get_available_products');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

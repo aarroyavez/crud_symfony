@@ -1,0 +1,24 @@
+{# templates/product/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Producto{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 mx-auto mt-4">
+            <h1 class="text-center">Crear Producto</h1>
+
+            <form method="post">
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.quantity) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

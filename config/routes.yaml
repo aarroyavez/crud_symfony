@@ -13,3 +13,8 @@ deleteUser:
 getAvailableProducts:
     path: /products
     controller: App\Controller\ProductController::getAvailableProducts
+
+newProduct:
+    path: /products/new
+    controller: App\Controller\ProductController::newProduct
+    methods: ['GET', 'POST']
