@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,20 +10,23 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Product;
 use App\Form\ProductType;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ProductController extends AbstractController
 {
     private $productRepository;
+    private $entityManager;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, EntityManagerInterface $entityManager)
     {
         $this->productRepository = $productRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * @Route("/products", name="get_available_products", methods={"GET"})
      */
-    public function getAvailableProducts(Request $request, ProductRepository $productRepository): JsonResponse
+    public function getAvailableProducts(Request $request): JsonResponse
     {
         // Validar el límite máximo de productos
         $limit = intval($request->query->get('limit', 10));
@@ -35,7 +37,7 @@ class ProductController extends AbstractController
 
         // Obtener la lista de productos que cumplan con los parámetros
         try {
-            $products = $productRepository->findAvailableProducts($limit, $searchTerm);
+            $products = $this->productRepository->findAvailableProducts($limit, $searchTerm);
 
             $responseData = [];
             foreach ($products as $product) {
@@ -65,11 +67,10 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
+            $this->entityManager->persist($product);
+            $this->entityManager->flush();
 
-            return $this->redirectToRoute('get_available_products');
+            return $this->redirectToRoute('getAvailableProducts');
         }
 
         return $this->render('product/new.html.twig', [
