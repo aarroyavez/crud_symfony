@@ -1,5 +1,4 @@
 <?php
-// src/Form/ProductOrderType.php
 
 namespace App\Form;
 
@@ -32,7 +31,6 @@ class ProductOrderType extends AbstractType
                 'label' => 'Total del pedido',
                 'attr' => ['class' => 'form-control'],
             ]);
-            
     }
 
     public function configureOptions(OptionsResolver $resolver)

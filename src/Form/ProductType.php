@@ -1,6 +1,5 @@
 <?php
 
-// src/Form/ProductType.php
 
 namespace App\Form;
 

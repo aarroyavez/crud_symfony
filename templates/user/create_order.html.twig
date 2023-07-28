@@ -5,11 +5,21 @@
 {% block title %}Crear Pedido{% endblock %}
 
 {% block body %}
-    <h1>Crear Pedido</h1>
-    {{ form_start(form) }}
-    {{ form_row(form.user) }}
-    {{ form_row(form.shippingAddress) }}
-    {{ form_row(form.total) }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    {{ form_end(form) }}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8"> {# Increased the column size to col-md-8 #}
+                <h1 class="text-center">Crear Pedido</h1>
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                {{ form_row(form.user, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.shippingAddress, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.total, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-center mt-3"> {# Added margin-top to create space between button and form #}
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+

@@ -1,5 +1,4 @@
 <?php
-// src/Form/OrderType.php
 
 namespace App\Form;
 
