@@ -1,9 +1,8 @@
 <?php
 
-
 namespace App\Form;
 
-use App\Entity\Product;
+use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,34 +10,33 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ProductType extends AbstractType
+class ProductOrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nombre del producto',
+            ->add('user', EntityType::class, [
+                'class' => 'App\Entity\Users',
+                'choice_label' => 'name',
+                'label' => 'Usuario del pedido',
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('quantity', IntegerType::class, [
-                'label' => 'Cantidad disponible',
+            ->add('shippingAddress', TextType::class, [
+                'label' => 'Dirección de envío',
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('price', NumberType::class, [
-                'label' => 'Precio unitario',
+            ->add('total', NumberType::class, [
+                'label' => 'Total del pedido',
                 'attr' => ['class' => 'form-control'],
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Guardar',
-                'attr' => ['class' => 'btn btn-primary'],
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => Order::class,
         ]);
     }
 }

@@ -18,3 +18,8 @@ newProduct:
     path: /products/new
     controller: App\Controller\ProductController::newProduct
     methods: ['GET', 'POST']
+
+user_create_order:
+    path: /user/create-order
+    controller: App\Controller\UserController::createOrder
+    methods: ['GET', 'POST']

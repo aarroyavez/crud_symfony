@@ -12,12 +12,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use App\Form\OrderType;
+use App\Entity\Order;
+use App\Form\ProductOrderType;
 
 class UserController extends AbstractController
 {
     private $entityManager;
     private $productRepository;
-    
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -83,8 +86,8 @@ class UserController extends AbstractController
         return $this->reDirectToRoute('getUsers');
     }
 
-    public function uptateUser($id){
-        
+    public function uptateUser($id)
+    {
     }
 
     /**
@@ -108,5 +111,33 @@ class UserController extends AbstractController
 
         return new JsonResponse($response);
     }
-}
 
+    /**
+     * @Route("/user/create-order", name="create_order")
+     */
+    public function createOrder(Request $request): Response
+    {
+        $order = new Order();
+
+        $form = $this->createForm(ProductOrderType::class, $order); // Usar ProductType::class
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Asignar el usuario actual al pedido (si es necesario)
+            $order->setUser($this->getUser());
+
+            // Persistir el pedido usando el EntityManager
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
+
+            // Redirigir a una página de éxito o hacer alguna otra acción
+            // ...
+
+            return $this->redirectToRoute('user_users_list');
+        }
+
+        return $this->render('user/create_order.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+}
